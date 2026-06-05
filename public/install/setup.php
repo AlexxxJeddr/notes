@@ -53,10 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
         
-        // Create database if not exists
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $pdo->exec("USE `$dbName`");
-        
         // Import schema
         $schema = file_get_contents(__DIR__ . '/schema.sql');
         $pdo->exec($schema);
@@ -102,7 +98,7 @@ PHP;
         
         echo "<div class='success'>Setup completed successfully!<br><br>";
         echo "<strong>Important:</strong> Delete the <code>install/</code> directory for security.<br>";
-        echo "Then visit <a href='../public/'>the app</a> to log in.<br>";
+        echo "Then visit <a href='../'>the app</a> to log in.<br>";
         echo "Username: <strong>{$adminUser}</strong><br>";
         echo "Password: <strong>********</strong></div>";
         exit;
