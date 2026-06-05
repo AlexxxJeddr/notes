@@ -23,10 +23,9 @@ class FolderModel
         return $stmt->fetch() ?: null;
     }
 
-    public function getChildren(int $parentId = null): array
+    public function getChildren(?int $parentId = null): array
     {
         $pdo = Database::getConnection();
-        $parentId ??= null;
         $stmt = $pdo->prepare("SELECT * FROM folders WHERE parent_id IS NULL OR parent_id = ? ORDER BY name ASC");
         $stmt->execute([$parentId]);
         return $stmt->fetchAll();
