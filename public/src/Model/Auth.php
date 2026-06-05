@@ -8,7 +8,7 @@ class Auth
 {
     public static function check(string $username, string $password): bool
     {
-        $config = require __DIR__ . '/../../../config/auth.php';
+        $config = require __DIR__ . '/../../config/auth.php';
         
         if ($username === $config['username']) {
             return password_verify($password, $config['password_hash']);
