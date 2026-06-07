@@ -49,15 +49,10 @@ class NoteController
 
     public function save(): void
     {
-        error_log('DEBUG: NoteController::save() called');
-        error_log('DEBUG: POST data: ' . print_r($_POST, true));
-        
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
         $title = trim($_POST['title'] ?? '');
         $body = $_POST['body'] ?? '';
         $folderId = isset($_POST['folder_id']) && $_POST['folder_id'] !== '' ? (int)$_POST['folder_id'] : null;
-        
-        error_log("DEBUG: id=$id, title='$title', folderId=" . var_export($folderId, true));
         
         if (empty($title)) {
             $_SESSION['error'] = 'Title is required.';
