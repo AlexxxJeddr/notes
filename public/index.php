@@ -2,6 +2,34 @@
 // Front Controller
 declare(strict_types=1);
 
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+
+// Global exception handler
+set_exception_handler(function ($e) {
+    echo "<div style='color: red; padding: 20px; border: 2px solid red; margin: 20px;'>";
+    echo "<h2>Uncaught Exception</h2>";
+    echo "<p><strong>Message:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>File:</strong> " . htmlspecialchars($e->getFile()) . ":" . $e->getLine() . "</p>";
+    echo "<p><strong>Trace:</strong></p><pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "</div>";
+});
+
+// Global error handler
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    if (!(error_reporting() & $errno)) {
+        return false;
+    }
+    echo "<div style='color: orange; padding: 20px; border: 2px solid orange; margin: 20px;'>";
+    echo "<h2>Error</h2>";
+    echo "<p><strong>Message:</strong> " . htmlspecialchars($errstr) . "</p>";
+    echo "<p><strong>File:</strong> " . htmlspecialchars($errfile) . ":" . $errline . "</p>";
+    echo "</div>";
+    return true;
+});
+
 // Start session
 session_start();
 
