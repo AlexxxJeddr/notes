@@ -52,7 +52,7 @@ class NoteController
         $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
         $title = trim($_POST['title'] ?? '');
         $body = $_POST['body'] ?? '';
-        $folderId = $_POST['folder_id'] !== '' ? (int)$_POST['folder_id'] : null;
+        $folderId = isset($_POST['folder_id']) && $_POST['folder_id'] !== '' ? (int)$_POST['folder_id'] : null;
         
         if (empty($title)) {
             $_SESSION['error'] = 'Title is required.';
@@ -60,14 +60,19 @@ class NoteController
             exit;
         }
         
-        if ($id === null) {
-            $this->noteModel->create($title, $body, $folderId);
-        } else {
-            $this->noteModel->update($id, $title, $body, $folderId);
+        try {
+            if ($id === null) {
+                $this->noteModel->create($title, $body, $folderId);
+            } else {
+                $this->noteModel->update($id, $title, $body, $folderId);
+            }
+            header('Location: ?action=list' . ($folderId !== null ? '&folder_id=' . $folderId : ''));
+            exit;
+        } catch (\PDOException $e) {
+            $_SESSION['error'] = 'Failed to save note: ' . $e->getMessage();
+            header('Location: ?action=edit&id=' . $id);
+            exit;
         }
-        
-        header('Location: ?action=list' . ($folderId !== null ? '&folder_id=' . $folderId : ''));
-        exit;
     }
 
     public function delete(): void
@@ -75,12 +80,15 @@ class NoteController
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         
         if ($id !== null) {
-            $note = $this->noteModel->getById($id);
-            $folderId = $note['folder_id'] ?? null;
-            $this->noteModel->delete($id);
-            
-            header('Location: ?action=list' . ($folderId !== null ? '&folder_id=' . $folderId : ''));
-            exit;
+            try {
+                $note = $this->noteModel->getById($id);
+                $folderId = $note['folder_id'] ?? null;
+                $this->noteModel->delete($id);
+                header('Location: ?action=list' . ($folderId !== null ? '&folder_id=' . $folderId : ''));
+                exit;
+            } catch (\PDOException $e) {
+                $_SESSION['error'] = 'Failed to delete note: ' . $e->getMessage();
+            }
         }
         
         header('Location: ?action=list');
