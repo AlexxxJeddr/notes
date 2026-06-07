@@ -12,6 +12,11 @@ class Parsedown
     protected $breaksEnabled = true;
     protected $markupEscaped = false;
     protected $safeMode = false;
+    protected $inlineTypes = [];
+    protected $textTypes = [];
+    protected $blockTypes = [];
+    protected $unmarkedBlockTypes = [];
+    protected $DefinitionData = [];
 
     protected static $instance;
 
