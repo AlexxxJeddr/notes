@@ -809,14 +809,14 @@ class Parsedown
 
     protected function safeModeSanitizeUrl($url)
     {
-        if (preg_match('/^[a-zA-Z]+:\/\//, $url)) {
+        if (preg_match('/^[a-zA-Z]+:\/\//', $url)) {
             $urlParts = parse_url($url);
 
             if (isset($urlParts['scheme'], $urlParts['host'])) {
                 $scheme = strtolower($urlParts['scheme']);
                 $host = strtolower($urlParts['host']);
 
-                if (($scheme === 'http' or $scheme === 'https') and $this->safeModeIsTrustedUrl($host)) {
+                if (($scheme === 'http' || $scheme === 'https') && $this->safeModeIsTrustedUrl($host)) {
                     return $url;
                 }
             }
