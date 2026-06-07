@@ -52,7 +52,7 @@ class NoteController
         error_log('DEBUG: NoteController::save() called');
         error_log('DEBUG: POST data: ' . print_r($_POST, true));
         
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
+        $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
         $title = trim($_POST['title'] ?? '');
         $body = $_POST['body'] ?? '';
         $folderId = isset($_POST['folder_id']) && $_POST['folder_id'] !== '' ? (int)$_POST['folder_id'] : null;
