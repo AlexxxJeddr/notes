@@ -24,7 +24,7 @@ spl_autoload_register(function (string $class) {
 });
 
 // Check if config exists
-if (!file_exists(__DIR__ . '/../config/db.php') || !file_exists(__DIR__ . '/../config/auth.php')) {
+if (!file_exists(__DIR__ . '/config/db.php') || !file_exists(__DIR__ . '/config/auth.php')) {
     header('Location: install/setup.php');
     exit;
 }
