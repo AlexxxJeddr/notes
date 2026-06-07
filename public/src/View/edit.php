@@ -29,12 +29,24 @@ ob_start();
     </div>
     
     <div class="form-group">
-        <label for="body">Body</label>
+        <label for="body">Body (Markdown supported)</label>
         <textarea id="body" 
                   name="body" 
                   rows="20" 
                   required><?php echo $note ? htmlspecialchars($note['body']) : ''; ?></textarea>
+        <div class="markdown-help">
+            <small>Supports: <code>**bold**</code>, <code>*italic*</code>, <code>`code`</code>, <code>[links](url)</code>, <code># Headers</code>, <code>- Lists</code>, <code>```code blocks```</code></small>
+        </div>
     </div>
+    
+    <?php if ($note): ?>
+    <div class="form-group preview-group">
+        <label>Preview</label>
+        <div class="markdown-preview">
+            <?php echo App\Model\NoteModel::parseMarkdown($note['body']); ?>
+        </div>
+    </div>
+    <?php endif; ?>
     
     <div class="form-actions">
         <button type="submit" class="btn">Save</button>

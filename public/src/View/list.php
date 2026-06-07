@@ -31,7 +31,8 @@ ob_start();
                 </div>
                 <div class="note-preview">
                     <?php 
-                    $preview = strip_tags($note['body']);
+                    $parsed = App\Model\NoteModel::parseMarkdown($note['body']);
+                    $preview = strip_tags($parsed);
                     echo htmlspecialchars(substr($preview, 0, 150)) . (strlen($preview) > 150 ? '...' : '');
                     ?>
                 </div>

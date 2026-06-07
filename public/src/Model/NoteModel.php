@@ -8,6 +8,12 @@ use PDO;
 
 class NoteModel
 {
+    public static function parseMarkdown(string $text): string
+    {
+        require_once __DIR__ . '/../../vendor/Parsedown.php';
+        $parsedown = new \Parsedown();
+        return $parsedown->text($text);
+    }
     public function getAll(?int $folderId = null): array
     {
         $pdo = Database::getConnection();

@@ -374,6 +374,145 @@ body {
     border: 1px solid #c8e6c9;
 }
 
+/* Markdown Styles */
+.markdown-help {
+    margin-top: 5px;
+    color: var(--text-secondary);
+}
+
+.markdown-help code {
+    background: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.preview-group {
+    margin-top: 20px;
+}
+
+.markdown-preview {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 15px;
+    min-height: 100px;
+}
+
+/* Markdown rendered content */
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4,
+.markdown-preview h5,
+.markdown-preview h6 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-color);
+}
+
+.markdown-preview h1 { font-size: 1.8em; }
+.markdown-preview h2 { font-size: 1.5em; }
+.markdown-preview h3 { font-size: 1.3em; }
+.markdown-preview h4 { font-size: 1.1em; }
+
+.markdown-preview p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.markdown-preview ul,
+.markdown-preview ol {
+    margin-bottom: 15px;
+    padding-left: 2em;
+}
+
+.markdown-preview li {
+    margin-bottom: 5px;
+}
+
+.markdown-preview blockquote {
+    border-left: 3px solid var(--border-color);
+    padding-left: 15px;
+    margin-left: 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.markdown-preview code {
+    background: var(--bg-color);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.9em;
+}
+
+.markdown-preview pre {
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+.markdown-preview pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.markdown-preview a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.markdown-preview a:hover {
+    text-decoration: underline;
+}
+
+.markdown-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.markdown-preview hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 20px 0;
+}
+
+.markdown-preview table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.markdown-preview th,
+.markdown-preview td {
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.markdown-preview th {
+    background: var(--bg-color);
+    font-weight: 600;
+}
+
+.markdown-preview strong {
+    font-weight: 600;
+}
+
+.markdown-preview em {
+    font-style: italic;
+}
+
+.markdown-preview del {
+    text-decoration: line-through;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .sidebar {
