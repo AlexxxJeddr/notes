@@ -55,53 +55,75 @@ spl_autoload_register(function (string $class) {
 });
 
 // Check if config exists
-if (!file_exists(__DIR__ . '/config/db.php') || !file_exists(__DIR__ . '/config/auth.php')) {
-    echo '<div style="color: red; padding: 20px;">DEBUG: Config files missing. Looking for: ' . htmlspecialchars(__DIR__ . '/config/db.php') . ' and ' . htmlspecialchars(__DIR__ . '/config/auth.php') . '</div>';
+$configDbPath = __DIR__ . '/config/db.php';
+$configAuthPath = __DIR__ . '/config/auth.php';
+error_log('DEBUG: Checking config files at: ' . $configDbPath . ' and ' . $configAuthPath);
+error_log('DEBUG: db.php exists: ' . (file_exists($configDbPath) ? 'YES' : 'NO'));
+error_log('DEBUG: auth.php exists: ' . (file_exists($configAuthPath) ? 'YES' : 'NO'));
+
+if (!file_exists($configDbPath) || !file_exists($configAuthPath)) {
+    echo '<div style="color: red; padding: 20px;">DEBUG: Config files missing. Looking for: ' . htmlspecialchars($configDbPath) . ' and ' . htmlspecialchars($configAuthPath) . '</div>';
+    error_log('DEBUG: Redirecting to setup - config missing');
     header('Location: install/setup.php');
     exit;
 }
+
+error_log('DEBUG: Config files found, proceeding');
 
 // Check authentication
 use App\Model\Auth;
 
 $action = $_GET['action'] ?? 'list';
 
+// Debug: Log the action
+error_log('DEBUG: Action requested: ' . $action);
+
 // Public actions (no auth required)
 $publicActions = ['login', 'authenticate'];
 
 if (!Auth::isAuthenticated() && !in_array($action, $publicActions, true)) {
+    error_log('DEBUG: Not authenticated, redirecting to login for action: ' . $action);
     header('Location: ?action=login');
     exit;
 }
 
+error_log('DEBUG: Authentication passed for action: ' . $action);
+
 // Route to appropriate controller
+error_log('DEBUG: Routing to action: ' . $action);
 switch ($action) {
     case 'login':
+        error_log('DEBUG: Routing to login');
         include __DIR__ . '/src/Controller/LoginController.php';
         (new App\Controller\LoginController())->showLogin();
         break;
     
     case 'authenticate':
+        error_log('DEBUG: Routing to authenticate');
         include __DIR__ . '/src/Controller/LoginController.php';
         (new App\Controller\LoginController())->authenticate();
         break;
     
     case 'logout':
+        error_log('DEBUG: Routing to logout');
         include __DIR__ . '/src/Controller/LoginController.php';
         (new App\Controller\LoginController())->logout();
         break;
     
     case 'list':
+        error_log('DEBUG: Routing to list');
         include __DIR__ . '/src/Controller/NoteController.php';
         (new App\Controller\NoteController())->list();
         break;
     
     case 'edit':
+        error_log('DEBUG: Routing to edit');
         include __DIR__ . '/src/Controller/NoteController.php';
         (new App\Controller\NoteController())->edit();
         break;
     
     case 'save':
+        error_log('DEBUG: Routing to save');
         echo '<!-- DEBUG: save action triggered, POST data: ' . htmlspecialchars(print_r($_POST, true)) . ' -->';
         include __DIR__ . '/src/Controller/NoteController.php';
         (new App\Controller\NoteController())->save();
