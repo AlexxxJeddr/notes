@@ -2,6 +2,9 @@
 // Front Controller
 declare(strict_types=1);
 
+// Debug: Always show this to confirm script is running
+echo '<!-- DEBUG: index.php is executing -->';
+
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -53,6 +56,7 @@ spl_autoload_register(function (string $class) {
 
 // Check if config exists
 if (!file_exists(__DIR__ . '/config/db.php') || !file_exists(__DIR__ . '/config/auth.php')) {
+    echo '<div style="color: red; padding: 20px;">DEBUG: Config files missing. Looking for: ' . htmlspecialchars(__DIR__ . '/config/db.php') . ' and ' . htmlspecialchars(__DIR__ . '/config/auth.php') . '</div>';
     header('Location: install/setup.php');
     exit;
 }
@@ -98,6 +102,7 @@ switch ($action) {
         break;
     
     case 'save':
+        echo '<!-- DEBUG: save action triggered, POST data: ' . htmlspecialchars(print_r($_POST, true)) . ' -->';
         include __DIR__ . '/src/Controller/NoteController.php';
         (new App\Controller\NoteController())->save();
         break;
